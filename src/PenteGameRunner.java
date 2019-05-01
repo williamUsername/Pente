@@ -1,3 +1,6 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 public class PenteGameRunner {
@@ -7,16 +10,30 @@ public class PenteGameRunner {
 		
 		int gWidth = 19*35;
 		int gHeight = 19*35;
+		int sbWidth = (int)(gWidth *0.50);
+		int sbHeight = (int)(gHeight);
 		
 		JFrame theGame = new JFrame("Pente!!!");
-		theGame.setSize(gWidth, gHeight +20);
+		
+		theGame.setLayout(new BorderLayout());
+		theGame.setResizable(false);
+		theGame.setSize(gWidth + sbWidth, gHeight +20);
 		theGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		PenteGameBoard gb = new PenteGameBoard(gWidth, gHeight);
-		theGame.add(gb);
+		PenteScore sb = new PenteScore(sbWidth, sbHeight);
+		sb.setPreferredSize(new Dimension(sbWidth, sbHeight));
+		
+		PenteGameBoard gb = new PenteGameBoard(gWidth, gHeight, sb);
+		gb.setPreferredSize(new Dimension(gWidth, gHeight));
+		
+		sb.setGameBoard(gb);
+		
+		theGame.add(gb, BorderLayout.CENTER);
+		theGame.add(sb,  BorderLayout.WEST);
+
 		
 		theGame.setVisible(true);
-		gb.startGame();
+		gb.startGame(true);
 
 	}
 
